@@ -1,66 +1,82 @@
+       
+// document.addEventListener("DOMContentLoaded",(e)=>{
+//     let circle = document.querySelectorAll('.circle') ;
+//     circle.forEach(function(progress){
+//         let degree = 0 ;
+//         var targetDegree = parseInt(progress.getAttribute('data-degree')) ;
+//         let color = progress.getAttribute('data-color') ;
+//         let number = progress.querySelector('.number') ;
+
+//         var interval = setInterval(()=>{
+//             degree += 1 ;
+//             if(degree > targetDegree){
+//                 clearInterval(interval) ;
+//                 return ;
+//             }
+//             progress.style.background = `conic-gradient(${color} ${degree}%, #222 0%)` ;
+//             number.innerHTML = degree + '<span>%</span>' ;
+//             number.style.color =color ;
+//         },50)
+//     })
+// })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let heartrate = document.querySelector('.heartrate_result') ;
-let heartrate_percentage = document.querySelector('#heartrate_percentage') ;
-
-let spo2 = document.querySelector('.spo2_result') ;
-let spo2_percentage = document.querySelector('#spo2_percentage') ;
-
-
-const form = document.querySelector('.bmi') ;
-
-form.addEventListener('submit',(e)=>{
-    e.preventDefault() ;
-
-    const height =  parseInt(document.querySelector('#height').value) ;
-    const weight =  parseInt(document.querySelector('#weight').value) ;
-    const results = document.querySelector('#results') ;
-    const condition = document.querySelector('#condition') ;
-
-    if((height==='' || height<0 || isNaN(height)) && (weight==='' || weight<0 || isNaN(weight))){
-        results.innerHTML = `Please give valid height-weight, your height ${height} and weight ${weight}` ;
+document.getElementById('height').addEventListener('input', calculateBMI); 
+document.getElementById('weight').addEventListener('input', calculateBMI);
+ function calculateBMI() { 
+    const height = document.getElementById('height').value; 
+    const weight = document.getElementById('weight').value; 
+    if(height>0 || weight>0){
+        const bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
+        document.getElementById('bmiresult').innerText = `${bmi}`;
     }
-    else if(height==='' || height<0 || isNaN(height)){
-        results.innerHTML = `Please give a valid height, your height is ${height}` ;
-    }
-    else if(weight==='' || weight<0 || isNaN(weight)){
-        results.innerHTML = `Please give a valid weight, your weight is ${weight}` ;
-    }
-    else{
-        const bmi = (weight / ((height * height) / 10000)).toFixed(2);
-        results.innerHTML = `<span>Your bmi is ${bmi}</span>` ;
-        if(bmi<18.6){
-            condition.innerHTML = `you are Underweight` ;
-        }
-        else if(bmi>=18.6 && bmi<=24.9){
-            condition.innerHTML = `you are at Normal Range` ;
-        }
-        else if(bmi>24.9){
-            condition.innerHTML = `you are OverWeight`
-        }
-    }
-
-});
+    else if (height > 0 && weight > 0) { 
+        const bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
+        document.getElementById('bmiresult').innerText = `${bmi}`;
+     }  
+}
 
 
+
+fetchheart() ;
+async function fetchheart(){
+    
+    try{
+
+        let heartrate = document.querySelector('#heart') ;
+        let heartratePercentage = document.querySelector('#heartrate_percentage') ;
+
+        let spo2rate = document.querySelector('#spo2') ;
+        let spo2Percentage = document.querySelector('#spo2_percentage') ;
+        
+       // fetch('http://localhost:9080/api/data/getall').then(val=>val.json()).then(val=>console.log(val))
+        
+       let response = await fetch('http://localhost:9080/api/data/getall'); 
+       let val = await response.json();
+       console.log(val) ;   
+
+       const length = Object.keys(val).length;
+        // Subtract 1 from the length 
+       const recentId = length - 1;
+
+        // for rendering heart rate
+        heartrate.innerText = `${val[recentId]?.heartrate}`; 
+        let heartratevaluePercentage = Math.round(heartrate.innerText) ;
+        heartratePercentage.innerText= `${heartratevaluePercentage}%` ;
+
+       // for rendering spo2 rate
+       spo2rate.innerText = `${val[recentId]?.spo2}`; 
+       let spo2valuePercentage = Math.round(spo2rate.innerText) ;
+       spo2Percentage.innerText= `${spo2valuePercentage}%` ; 
+
+
+    }
+    catch(err){
+        console.log('error found',err) ;
+    }
+
+    ;
+    
+
+}
 
