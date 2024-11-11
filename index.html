@@ -159,7 +159,7 @@ The Rural Area Health Monitoring System is more than just a product—it's part 
             
             <div class="input">
                     <div class="date">
-                        <input type="date">
+                        <input type="date" id="date">
                     </div>
                     <div class="height">
                         <input type="number" id="height" placeholder="height in cm">
@@ -261,50 +261,47 @@ The Rural Area Health Monitoring System is more than just a product—it's part 
             <!-- start recent check -->
             <div class="recent_check">
                 <h2>Recent Readings</h2>
-                <table>
+                <!-- <ul id="data-list"> 
+                    <li>John Doe, 28, Engineer</li> 
+                    <li>Jane Smith, 34, Doctor</li> 
+                    <li>Emily Jones, 23, Artist</li> 
+                </ul> -->
+                <table id="data-table">
                     <thead>
                         <th>Date</th>
-                        <th>Heart rate</th>
-                        <th>Spo2</th>
-                        <th>Status</th>
+                        <th>Time</th>
+                        <th id="test">Test</th>
                     </thead>
 
+                    <!-- <tbody>
+
+                    </tbody> -->
                     <tbody>
-                        <tr>
-                            <td>08-11-24</td>
-                            <td>75 Bpm</td>
-                            <td>34.56mmhg</td>
+                        <!-- <tr>
+                            <td id="lastDate1">08-11-24</td>
+                            <td id="lastHeartRate1">75 Bpm</td>
+                            <td id="lastSpo21">34.56mmhg</td>
                             <td class="warning">Normal</td>
                             <td class="primary">Details</td>
-                        </tr>
+                        </tr> --> 
 
-                        <tr>
-                            <td>09-06-24</td>
-                            <td>75 Bpm</td>
-                            <td>34.56mmhg</td>
+                        <!-- <tr>
+                            <td id="#lastDate2">09-06-24</td>
+                            <td id="lastHeartRate2">75 Bpm</td>
+                            <td id="lastSpo22">34.56mmhg</td>
                             <td class="warning">Normal</td>
                             <td class="primary">Details</td>
-                        </tr>
+                        </tr> -->
 
-                        <tr>
-                            <td>12-04-24</td>
-                            <td>75 Bpm</td>
-                            <td>34.56mmhg</td>
-                            <td class="warning">Normal</td>
-                            <td class="primary">Details</td>
-                        </tr>
-
-                        <tr>
-                            <td>02-03-24</td>
-                            <td>75 Bpm</td>
-                            <td>34.56mmhg</td>
-                            <td class="warning">Normal</td>
-                            <td class="primary">Details</td>
-                        </tr>
 
                         
-                    </tbody>
+
+                        
+                    </tbody> 
                 </table>
+
+                
+
             </div>
              <!-- end recent order -->
 
