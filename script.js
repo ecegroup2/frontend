@@ -33,6 +33,7 @@ document.getElementById("date").value = formattedDate;
 // for input height and weight for BMI in UI
 document.getElementById("height").addEventListener("input", calculateBMI);
 document.getElementById("weight").addEventListener("input", calculateBMI);
+document.getElementById("bmiresult").innerText = ``;
 function calculateBMI() {
   const height = document.getElementById("height").value;
   const weight = document.getElementById("weight").value;
@@ -54,10 +55,10 @@ async function fetchheart() {
     let spo2rate = document.querySelector("#spo2");
     let spo2Percentage = document.querySelector("#spo2_percentage");
 
-    // fetch('http://localhost:9080/api/data/getall').then(val=>val.json()).then(val=>//console.log(val))
+    // fetch('http://raspi.local:9080/api/data/getall').then(val=>val.json()).then(val=>//console.log(val))
 
     let response = await fetch(
-      `http://localhost:9080/api/data/getByDate?date=${formattedDate}`
+      `http://raspi.local:9080/api/data/getByDate?date=${formattedDate}`
     );
     let val = await response.json();
     //console.log("val", val);
@@ -92,7 +93,7 @@ async function dateReportList() {
 
     const datechanger = document.getElementById("date");
     response = await fetch(
-      `http://localhost:9080/api/data/getByDate?date=${datechanger.value}`
+      `http://raspi.local:9080/api/data/getByDate?date=${datechanger.value}`
     );
     //console.log('date kya hai',formattedDate)
     data = await response.json();
@@ -168,7 +169,7 @@ async function testResult(id) {
     let spo2rate = document.querySelector("#spo2");
     let spo2Percentage = document.querySelector("#spo2_percentage");
 
-    let response = await fetch(`http://localhost:9080/api/data/get/${id}`);
+    let response = await fetch(`http://raspi.local:9080/api/data/get/${id}`);
     let val = await response.json();
     // console.log("val", val);
     // console.log("isit", val?.userId);
