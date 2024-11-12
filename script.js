@@ -149,7 +149,8 @@ async function datereposrtlist(){
            newdetails.innerHTML = 'Details' ;
            newRow.appendChild(newdetails);
 
-           //newdetails.setAttribute('onclick', testResult(id)) ;
+        //for onclick evnt on Details section to show the previous test result in UI  
+          newdetails.setAttribute('onclick', `testResult(${id})`);
 
         }});
         
@@ -159,29 +160,41 @@ async function datereposrtlist(){
 }
 
 
-// async function testResult(id){
-//     console.log('id mil gya',id) ;
+async function testResult(id){
+    
+       try{
+        console.log('id mil gya',id) ;
 
-//     let heartrate = document.querySelector('#heart') ;
-//     let heartratePercentage = document.querySelector('#heartrate_percentage') ;
+        let heartrate = document.querySelector('#heart') ;
+        let heartratePercentage = document.querySelector('#heartrate_percentage') ;
+    
+        let spo2rate = document.querySelector('#spo2') ;
+        let spo2Percentage = document.querySelector('#spo2_percentage') ;
+    
+        let response = await fetch('http://localhost:9080/api/data/getall'); 
+           let val = await response.json();
+           console.log('val',val) ;   
+    
+           const length = Object.keys(val).length;
+    
+           for(let i=0 ; i<length ; i++){
+            if(val[i]?.userId == id){
+                console.log('isit',val[i]?.userId )
+                // for rendering heart rate
+                heartrate.innerText = `${val[i]?.heartrate}`; 
+                let heartratevaluePercentage = Math.round(heartrate.innerText) ;
+                heartratePercentage.innerText= `${heartratevaluePercentage}%` ;
+    
+                // for rendering spo2 rate
+                spo2rate.innerText = `${val[i]?.spo2}`; 
+                console.log('spo2:',spo2.innerText) ;
+                let spo2valuePercentage = Math.round(spo2rate.innerText) ;
+                spo2Percentage.innerText= `${spo2valuePercentage}%` ; 
+            }
+        }
+       }
+       catch(err){
+        console.log(err) ;
+       }
 
-//     let spo2rate = document.querySelector('#spo2') ;
-//     let spo2Percentage = document.querySelector('#spo2_percentage') ;
-
-//     let response = await fetch('http://localhost:9080/api/data/getall'); 
-//        let val = await response.json();
-//        console.log('val',val) ;   
-
-//        const length = Object.keys(val).length;
-
-//        for(let i=0 ; i<length ; i++){
-//         if(val[i]?.userId == id){
-//             console.log('isit',val[i]?.userId )
-//             // for rendering heart rate
-//             heartrate.innerText = `${val[id]?.heartrate}`; 
-//             let heartratevaluePercentage = Math.round(heartrate.innerText) ;
-//             heartratePercentage.innerText= `${heartratevaluePercentage}%` ;
-//         }
-//        }
-
-// }
+}
